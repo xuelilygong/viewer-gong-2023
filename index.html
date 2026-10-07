@@ -60,7 +60,8 @@
     // Each tab loads its own pycortex viewer; the URL hash (#page1..#page4) selects it.
     function showPage() {
       var page = /^#page[1-4]$/.test(location.hash) ? location.hash.slice(1) : "page1";
-      document.getElementById("viewer").src = page + "/viewer.html";
+      // replace() keeps the iframe out of browser history, so Back follows the tabs.
+      document.getElementById("viewer").contentWindow.location.replace(page + "/viewer.html");
       document.querySelectorAll(".gl-tabs a").forEach(function(a) {
         a.classList.toggle("active", a.getAttribute("href") === "#" + page);
       });
