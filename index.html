@@ -31,6 +31,10 @@
   .gl-tabs a { color: #bbb; font-size: 13px; padding: 5px 12px; border-radius: 4px; }
   .gl-tabs a:hover { background: rgba(255,255,255,0.1); color: #fff; }
   .gl-tabs a.active { background: #e8590c; color: #fff; }
+  .gl-takeaway { padding: 8px 16px 10px; background: #1a1a1a; border-top: 1px solid #2a2a2a;
+    color: #ddd; font-size: 13px; line-height: 1.45; }
+  .gl-takeaway p { margin: 0; display: none; }
+  .gl-takeaway p.active { display: block; }
   iframe { flex: 1 1 auto; min-height: 0; width: 100%; border: 0; display: block; }
 </style>
 </head>
@@ -51,7 +55,13 @@
       <a href="#page1">1. Overview</a>
       <a href="#page2">2. Acoustic</a>
       <a href="#page3">3. Phonemic</a>
-      <a href="#page4">4. Phonemic vs semantic</a>
+      <a href="#page4">4. Semantic</a>
+    </div>
+    <div class="gl-takeaway">
+      <p data-page="page1">Speech processing requires extracting meaning from acoustic patterns using a set of intermediate representations based on a dynamic segmentation of the speech stream. Here we show that features at different levels of the speech and language hierarchy are represented in different parts of the brain.</p>
+      <p data-page="page2">An acoustic baseline model (spectrum power + phoneme count) predicts activity in primary auditory cortex (PAC), lateral temporal cortex, sPMv and inferior prefrontal cortex (IPFC). Spectrum power best explains PAC, while phoneme count best explains STG, sPMv and IPFC.</p>
+      <p data-page="page3">Phonemic features predict activity across large parts of temporal, parietal and prefrontal cortex, most strongly in the superior temporal sulcus and lateral temporal cortex, and only weakly in primary auditory cortex. Diphones are the dominant phonemic feature.</p>
+      <p data-page="page4">Representations shift from phonemic to semantic along a gradient in temporal cortex, from medial-superior to lateral-posterior regions. In inferior prefrontal cortex, the inferior part favors phonemic features and the superior part favors semantic features.</p>
     </div>
   </div>
 
@@ -64,6 +74,9 @@
       document.getElementById("viewer").contentWindow.location.replace(page + "/viewer.html");
       document.querySelectorAll(".gl-tabs a").forEach(function(a) {
         a.classList.toggle("active", a.getAttribute("href") === "#" + page);
+      });
+      document.querySelectorAll(".gl-takeaway p").forEach(function(p) {
+        p.classList.toggle("active", p.dataset.page === page);
       });
     }
     window.addEventListener("hashchange", showPage);
