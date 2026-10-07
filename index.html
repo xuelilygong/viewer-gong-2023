@@ -27,6 +27,10 @@
   .gl-bar .gl-home { font-weight: 700; margin-right: 16px; }
   .gl-bar nav { display: flex; gap: 2px; flex: 1; }
   .gl-bar nav a { font-weight: 500; }
+  .gl-tabs { display: flex; gap: 4px; padding: 6px 16px; background: #1a1a1a; border-top: 1px solid #2a2a2a; }
+  .gl-tabs a { color: #bbb; font-size: 13px; padding: 5px 12px; border-radius: 4px; }
+  .gl-tabs a:hover { background: rgba(255,255,255,0.1); color: #fff; }
+  .gl-tabs a.active { background: #e8590c; color: #fff; }
   iframe { flex: 1 1 auto; min-height: 0; width: 100%; border: 0; display: block; }
 </style>
 </head>
@@ -43,8 +47,26 @@
       </nav>
     </div>
     <div class="gl-row2">Gong, X., Huth, A.G., Deniz, F., Johnson, K., Gallant, J.L., Theunissen, F.E. (2023). <a href="https://www.nature.com/articles/s41467-023-39872-w" target="_top">Phonemic segmentation of narrative speech in human cerebral cortex.</a> <em>Nature Communications</em>, 14, 4309.</div>
+    <div class="gl-tabs">
+      <a href="#page1">1. Overview</a>
+      <a href="#page2">2. Acoustic</a>
+      <a href="#page3">3. Phonemic</a>
+      <a href="#page4">4. Phonemic vs semantic</a>
+    </div>
   </div>
 
-  <iframe src="viewer.html" title="Gong et al. 2023 brain viewer"></iframe>
+  <iframe id="viewer" title="Gong et al. 2023 brain viewer"></iframe>
+  <script>
+    // Each tab loads its own pycortex viewer; the URL hash (#page1..#page4) selects it.
+    function showPage() {
+      var page = /^#page[1-4]$/.test(location.hash) ? location.hash.slice(1) : "page1";
+      document.getElementById("viewer").src = page + "/viewer.html";
+      document.querySelectorAll(".gl-tabs a").forEach(function(a) {
+        a.classList.toggle("active", a.getAttribute("href") === "#" + page);
+      });
+    }
+    window.addEventListener("hashchange", showPage);
+    showPage();
+  </script>
 </body>
 </html>
